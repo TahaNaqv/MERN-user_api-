@@ -1,22 +1,27 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 
-const userSchema = new mongoose.Schema({
-    name: {
-        required: true,
-        type: String,
+const userSchema = new mongoose.Schema(
+    {
+        name: {
+            required: true,
+            type: String,
+        },
+        email: {
+            required: true,
+            unique: true,
+            type: String,
+        },
+        password: {
+            required: true,
+            // unique: true,
+            type: String,
+        },
     },
-    email: {
-        required: true,
-        unique: true,
-        type: String,
-    },
-    password: {
-        required: true,
-        // unique: true,
-        type: String,
-    },
-})
+    {
+        timestamps: true,
+    }
+)
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
